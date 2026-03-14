@@ -1,7 +1,14 @@
 <?php
 session_start();
 include "config.php";
-include "sidebar.php";
+
+/* Protect page */
+if(!isset($_SESSION['user'])){
+header("Location: login.php");
+exit;
+}
+
+/* POB Query */
 
 $query = "
 SELECT 
@@ -36,23 +43,78 @@ $result = mysqli_query($conn,$query);
 
 <style>
 
+/* PAGE */
+
 body{
-background:#0b1f3a;
-font-family:Arial;
-color:white;
 margin:0;
+font-family:Arial;
+background:#0b1f3a;
+color:white;
 }
 
-.container{
-margin-left:240px;
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:220px;
+height:100%;
+background:#111c2e;
 padding:20px;
 }
 
-.header{
-font-size:28px;
-text-align:center;
-margin-bottom:30px;
+.sidebar h2{
+color:white;
 }
+
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+padding:10px;
+margin-top:10px;
+}
+
+.sidebar a:hover{
+background:#ff7a00;
+border-radius:5px;
+}
+
+/* TOP BAR */
+
+.topbar{
+position:fixed;
+left:220px;
+top:0;
+right:0;
+height:60px;
+background:#111c2e;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+}
+
+.topbar a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+}
+
+.topbar a:hover{
+color:#ff7a00;
+}
+
+/* MAIN CONTENT */
+
+.container{
+margin-left:240px;
+margin-top:80px;
+padding:20px;
+}
+
+/* GRID */
 
 .grid{
 display:grid;
@@ -60,20 +122,24 @@ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 }
 
+/* SITE TITLE */
+
 .site-title{
 grid-column:1/-1;
-font-size:22px;
+font-size:24px;
 margin-top:30px;
 border-bottom:2px solid #ff7a00;
 padding-bottom:5px;
 }
+
+/* RIG CARD */
 
 .card{
 background:#1f2d3d;
 padding:25px;
 border-radius:12px;
 text-align:center;
-box-shadow:0 5px 15px rgba(0,0,0,0.4);
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
 }
 
 .rig{
@@ -83,12 +149,13 @@ font-weight:bold;
 
 .site{
 color:#aaa;
+margin-top:5px;
 }
 
 .pob{
-font-size:40px;
+font-size:42px;
 color:#ff7a00;
-margin-top:10px;
+margin-top:15px;
 font-weight:bold;
 }
 
@@ -98,11 +165,37 @@ font-weight:bold;
 
 <body>
 
-<div class="container">
+<!-- SIDEBAR -->
 
-<div class="header">
-RIG OPERATIONS DASHBOARD
+<div class="sidebar">
+
+<h2>Rig Control</h2>
+
+<a href="dashboard.php">Dashboard</a>
+<a href="sites.php">Sites</a>
+<a href="rigs.php">Rigs</a>
+<a href="personnel.php">Personnel</a>
+<a href="movement_entry.php">Movement Entry</a>
+<a href="logout.php">Logout</a>
+
 </div>
+
+<!-- HEADER -->
+
+<div class="topbar">
+
+<div>Rig Operations System</div>
+
+<div>
+<a href="dashboard.php">Home</a>
+<a href="logout.php">Logout</a>
+</div>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div class="container">
 
 <div class="grid">
 
@@ -152,4 +245,5 @@ Person On Board
 </div>
 
 </body>
+
 </html>
