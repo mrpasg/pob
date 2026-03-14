@@ -1,5 +1,11 @@
 <?php
+session_start();
 include "config.php";
+
+if(!isset($_SESSION['user'])){
+header("Location: login.php");
+exit;
+}
 
 if(isset($_POST['submit']))
 {
@@ -34,19 +40,41 @@ $rigs=mysqli_query($conn,"SELECT * FROM rigs");
 <style>
 
 body{
-background:#0b1f3a;
+margin:0;
 font-family:Arial;
+background:#0b1f3a;
 color:white;
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:220px;
+height:100%;
+background:#111c2e;
+padding:20px;
+}
+
+.sidebar a{
+display:block;
+color:white;
+padding:10px;
+text-decoration:none;
+}
+
+.sidebar a:hover{
+background:#ff7a00;
 }
 
 .container{
 margin-left:240px;
+margin-top:80px;
 padding:20px;
 }
 
-input,select{
-padding:10px;
-width:200px;
+select{
+padding:8px;
 margin-top:10px;
 }
 
@@ -55,7 +83,6 @@ padding:10px 20px;
 background:#ff7a00;
 border:none;
 color:white;
-margin-top:10px;
 }
 
 </style>
@@ -64,7 +91,18 @@ margin-top:10px;
 
 <body>
 
-<?php include "sidebar.php"; ?>
+<div class="sidebar">
+
+<h2>Rig Control</h2>
+
+<a href="dashboard.php">Dashboard</a>
+<a href="sites.php">Sites</a>
+<a href="rigs.php">Rigs</a>
+<a href="personnel.php">Personnel</a>
+<a href="movement_entry.php">Movement Entry</a>
+<a href="logout.php">Logout</a>
+
+</div>
 
 <div class="container">
 
@@ -72,7 +110,7 @@ margin-top:10px;
 
 <form method="POST">
 
-<label>Person</label><br>
+Person
 
 <select name="person">
 
@@ -88,7 +126,7 @@ margin-top:10px;
 
 <br><br>
 
-<label>Rig</label><br>
+Rig
 
 <select name="rig">
 
@@ -104,7 +142,7 @@ margin-top:10px;
 
 <br><br>
 
-<label>Movement</label><br>
+Movement
 
 <select name="type">
 

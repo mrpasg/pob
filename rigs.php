@@ -1,5 +1,11 @@
 <?php
+session_start();
 include "config.php";
+
+if(!isset($_SESSION['user'])){
+header("Location: login.php");
+exit;
+}
 
 if(isset($_POST['submit']))
 {
@@ -34,25 +40,79 @@ LEFT JOIN sites ON rigs.site_id=sites.id
 <style>
 
 body{
+margin:0;
 font-family:Arial;
 background:#0b1f3a;
 color:white;
 }
 
-.container{
-width:900px;
-margin:auto;
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:220px;
+height:100%;
+background:#111c2e;
+padding:20px;
 }
+
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+padding:10px;
+margin-top:10px;
+}
+
+.sidebar a:hover{
+background:#ff7a00;
+border-radius:5px;
+}
+
+/* HEADER */
+
+.topbar{
+position:fixed;
+left:220px;
+top:0;
+right:0;
+height:60px;
+background:#111c2e;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+}
+
+/* CONTENT */
+
+.container{
+margin-left:240px;
+margin-top:80px;
+padding:20px;
+}
+
+/* TABLE */
 
 table{
 width:100%;
 background:#1f2d3d;
 border-collapse:collapse;
+margin-top:20px;
 }
 
-td,th{
-padding:10px;
+th,td{
+padding:12px;
 border:1px solid #333;
+}
+
+button{
+padding:8px 15px;
+background:#ff7a00;
+border:none;
+color:white;
 }
 
 </style>
@@ -60,6 +120,29 @@ border:1px solid #333;
 </head>
 
 <body>
+
+<div class="sidebar">
+
+<h2>Rig Control</h2>
+
+<a href="dashboard.php">Dashboard</a>
+<a href="sites.php">Sites</a>
+<a href="rigs.php">Rigs</a>
+<a href="personnel.php">Personnel</a>
+<a href="movement_entry.php">Movement Entry</a>
+<a href="logout.php">Logout</a>
+
+</div>
+
+<div class="topbar">
+
+<div>Rig Operations System</div>
+
+<div>
+<a href="dashboard.php">Home</a>
+</div>
+
+</div>
 
 <div class="container">
 
@@ -88,8 +171,6 @@ Site
 
 </form>
 
-<br>
-
 <table>
 
 <tr>
@@ -113,5 +194,4 @@ Site
 </div>
 
 </body>
-
 </html>
