@@ -1,14 +1,7 @@
 <?php
 session_start();
 include "config.php";
-
-/* Protect page */
-if(!isset($_SESSION['user'])){
-header("Location: login.php");
-exit;
-}
-
-/* Query for POB per rig */
+include "sidebar.php";
 
 $query = "
 SELECT 
@@ -30,7 +23,6 @@ ORDER BY sites.id, rigs.rig_name
 ";
 
 $result = mysqli_query($conn,$query);
-
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +32,7 @@ $result = mysqli_query($conn,$query);
 
 <title>Rig Operations Dashboard</title>
 
-<meta http-equiv="refresh" content="30">
+<meta http-equiv="refresh" content="20">
 
 <style>
 
@@ -51,89 +43,53 @@ color:white;
 margin:0;
 }
 
-.header{
-
-background:#111c2e;
+.container{
+margin-left:240px;
 padding:20px;
-text-align:center;
-font-size:28px;
-font-weight:bold;
-
 }
 
-.container{
-
-max-width:1200px;
-margin:auto;
-padding:20px;
-
+.header{
+font-size:28px;
+text-align:center;
+margin-bottom:30px;
 }
 
 .grid{
-
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
-
 }
 
 .site-title{
-
 grid-column:1/-1;
-font-size:24px;
+font-size:22px;
 margin-top:30px;
 border-bottom:2px solid #ff7a00;
 padding-bottom:5px;
-
 }
 
 .card{
-
 background:#1f2d3d;
 padding:25px;
 border-radius:12px;
 text-align:center;
-
-box-shadow:0 5px 15px rgba(0,0,0,0.5);
-
-transition:0.2s;
-
-}
-
-.card:hover{
-transform:translateY(-5px);
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
 }
 
 .rig{
-
 font-size:22px;
 font-weight:bold;
-
 }
 
 .site{
-
 color:#aaa;
-margin-top:5px;
-
 }
 
 .pob{
-
-font-size:42px;
+font-size:40px;
 color:#ff7a00;
-margin-top:15px;
+margin-top:10px;
 font-weight:bold;
-
-}
-
-.footer{
-
-text-align:center;
-margin-top:40px;
-font-size:12px;
-color:#888;
-
 }
 
 </style>
@@ -142,11 +98,11 @@ color:#888;
 
 <body>
 
+<div class="container">
+
 <div class="header">
 RIG OPERATIONS DASHBOARD
 </div>
-
-<div class="container">
 
 <div class="grid">
 
@@ -193,14 +149,7 @@ Person On Board
 
 </div>
 
-<div class="footer">
-
-Rig Operations Monitoring System
-
-</div>
-
 </div>
 
 </body>
-
 </html>
